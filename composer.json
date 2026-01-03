@@ -2,21 +2,8 @@
     "name": "arty/probe-bundle",
     "description": "A Symfony bundle to create Probes",
     "type": "symfony-bundle",
-    "autoload": {
-        "psr-4": {
-            "Arty\\ProbeBundle\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Arty\\ProbeBundle\\Tests\\": "tests/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Arty"
-        }
-    ],
+    "license": "MIT",
+    "minimum-stability": "stable",
     "require": {
         "php": "^8.3",
         "symfony/console": "^6.0|^7.0|^8.0",
@@ -31,5 +18,20 @@
     "require-dev": {
         "phpunit/phpunit": "^12.5",
         "phpspec/prophecy-phpunit": "^2.4"
-    }
+    },
+    "autoload": {
+        "psr-4": {
+            "Arty\\ProbeBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Arty\\ProbeBundle\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Arty"
+        }
+    ]
 }
