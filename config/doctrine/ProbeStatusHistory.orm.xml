@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <mapped-superclass name="Arty\ProbeBundle\Entity\ProbeStatusHistory" table="probe_status_history" repository-class="Arty\ProbeBundle\Repository\RefreshTokenRepository">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="probeName" type="string" length="255" column="probe_name"/>
+        <field name="probeDescription" type="string" length="255" column="probe_description"/>
+        <field name="status" type="string" enum-type="Arty\ProbeBundle\Probe\ProbeStatus" column="status"/>
+        <field name="checkedAt" type="datetime" column="checked_at"/>
+    </mapped-superclass>
+</doctrine-mapping>

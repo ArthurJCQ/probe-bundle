@@ -1,0 +1,35 @@
+{
+    "name": "arty/probe-bundle",
+    "description": "A Symfony bundle to create Probes",
+    "type": "symfony-bundle",
+    "autoload": {
+        "psr-4": {
+            "Arty\\ProbeBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Arty\\ProbeBundle\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Arty"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "symfony/console": "^6.0|^7.0|^8.0",
+        "symfony/dependency-injection": "^6.0|^7.0|^8.0",
+        "symfony/http-kernel": "^6.0|^7.0|^8.0",
+        "doctrine/persistence": "^3.4|^4.1",
+        "doctrine/orm": "^2.7|^3.0",
+        "symfony/config": "^6.0|^7.0|^8.0",
+        "symfony/mailer": "^6.0|^7.0|^8.0",
+        "symfony/twig-bridge": "^6.0|^7.0|^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.5",
+        "phpspec/prophecy-phpunit": "^2.4"
+    }
+}

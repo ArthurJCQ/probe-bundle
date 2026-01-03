@@ -1,0 +1,16 @@
+<h1>Probe Failure Alert</h1>
+
+<p>Hello,</p>
+
+<p>The probe <strong>{{ name }}</strong> has failed.</p>
+
+<p><strong>Details:</strong></p>
+<ul>
+    <li><strong>Probe Name:</strong> {{ name }}</li>
+    <li><strong>Failure Time:</strong> {{ checkedAt|date('Y-m-d H:i:s') }}</li>
+</ul>
+
+<p>Please check the system as soon as possible to resolve the issue.</p>
+
+<p>Best regards,<br>
+Probe Monitor</p>

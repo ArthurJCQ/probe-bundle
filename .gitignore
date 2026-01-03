@@ -1,0 +1,15 @@
+# Composer dependencies
+/vendor/
+
+# Composer lock file (keep for libraries, but this is a bundle so include it)
+# composer.lock is typically kept for bundles to ensure consistent dependencies
+
+# PHPUnit
+/.phpunit.result.cache
+/phpunit.xml
+
+# IDE
+/.idea/
+*.swp
+*.swo
+*~
