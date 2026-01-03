@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Arty\ProbeBundle\Doctrine\Entity;
+namespace Arty\ProbeBundle\Model;
 
-use Arty\ProbeBundle\Model\ProbeStatus;
-
-abstract class ProbeStatusHistory
+abstract class AbstractProbeStatusHistory
 {
     public ?int $id = null;
 

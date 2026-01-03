@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Arty\ProbeBundle\Mailer;
 
-use Arty\ProbeBundle\Doctrine\Entity\ProbeStatusHistory;
+use Arty\ProbeBundle\Entity\ProbeStatusHistory;
 use Arty\ProbeBundle\Model\AlertManagerInterface;
 use Arty\ProbeBundle\Model\ProbeFailureEmailInterface;
 use Symfony\Component\Mailer\MailerInterface;

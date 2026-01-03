@@ -6,8 +6,8 @@ namespace Arty\ProbeBundle;
 
 use Arty\ProbeBundle\Command\RunProbesCommand;
 use Arty\ProbeBundle\DependencyInjection\ProbeCompilerPass;
-use Arty\ProbeBundle\Doctrine\Entity\ProbeStatusHistory;
 use Arty\ProbeBundle\Doctrine\ProbeManager;
+use Arty\ProbeBundle\Entity\ProbeStatusHistory;
 use Arty\ProbeBundle\Mailer\AlertManager;
 use Arty\ProbeBundle\Mailer\ProbeFailureEmail;
 use Arty\ProbeBundle\Model\AlertManagerInterface;

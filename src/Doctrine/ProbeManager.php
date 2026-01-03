@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Arty\ProbeBundle\Doctrine;
 
-use Arty\ProbeBundle\Doctrine\Entity\ProbeStatusHistory;
 use Arty\ProbeBundle\Doctrine\Repository\ProbeStatusHistoryRepositoryInterface;
+use Arty\ProbeBundle\Entity\ProbeStatusHistory;
 use Arty\ProbeBundle\Model\ProbeManagerInterface;
 use Arty\ProbeBundle\Model\ProbeStatus;
 use Doctrine\Persistence\ObjectManager;

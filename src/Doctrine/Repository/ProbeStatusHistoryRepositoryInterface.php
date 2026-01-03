@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Arty\ProbeBundle\Doctrine\Repository;
 
-use Arty\ProbeBundle\Doctrine\Entity\ProbeStatusHistory;
+use Arty\ProbeBundle\Entity\ProbeStatusHistory;
 use Doctrine\Persistence\ObjectRepository;
 
 /**

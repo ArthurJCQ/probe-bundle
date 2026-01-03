@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Arty\ProbeBundle;
 
-use Arty\ProbeBundle\Doctrine\Entity\ProbeStatusHistory;
+use Arty\ProbeBundle\Entity\ProbeStatusHistory;
 use Arty\ProbeBundle\Model\AlertManagerInterface;
 use Arty\ProbeBundle\Model\ProbeInterface;
 use Arty\ProbeBundle\Model\ProbeManagerInterface;
@@ -60,7 +60,6 @@ readonly final class ProbeRunner
             $status,
             new \DateTimeImmutable(),
         );
-        $this->probeManager->save($probeStatusHistory);
 
         if ($this->alertManager instanceof AlertManagerInterface
             && $status === ProbeStatus::FAILED
@@ -68,6 +67,8 @@ readonly final class ProbeRunner
         ) {
             $this->alertManager->sendAlert($probeStatusHistory);
         }
+
+        $this->probeManager->save($probeStatusHistory);
 
         return $probeStatusHistory;
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Arty\ProbeBundle\Tests\Probe;
 
-use Arty\ProbeBundle\Doctrine\Entity\ProbeStatusHistory;
+use Arty\ProbeBundle\Entity\ProbeStatusHistory;
 use Arty\ProbeBundle\Model\AlertManagerInterface;
 use Arty\ProbeBundle\Model\ProbeManagerInterface;
 use Arty\ProbeBundle\Model\ProbeStatus;

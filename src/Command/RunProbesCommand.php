@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'app:probe:run')]
+#[AsCommand(name: 'arty:probe:run', description: 'Run all probes or a specific probe')]
 class RunProbesCommand extends Command
 {
     public function __construct(private readonly ProbeRunner $runner)

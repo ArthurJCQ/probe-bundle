@@ -14,7 +14,7 @@ return static function (DefinitionConfigurator $definition): void {
                     ->scalarNode('from_address')->defaultNull()->end()
                     ->scalarNode('from_name')->defaultNull()->end()
                     ->scalarNode('subject')->defaultNull()->end()
-                    ->scalarNode('template')->defaultValue('@ArtyProbeBundle/alerting/failure.html.twig')->end()
+                    ->scalarNode('template')->defaultValue('@ArtyProbe/alerting/failure.html.twig')->end()
                 ->end()
             ->end()
         ->end();
