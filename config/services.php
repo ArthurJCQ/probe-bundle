@@ -55,6 +55,7 @@ return static function (ContainerConfigurator $container, ContainerBuilder $buil
             new Reference(ProbeManagerInterface::class),
             new Reference(AlertManagerInterface::class, ContainerInterface::NULL_ON_INVALID_REFERENCE),
         ]);
+    $services->alias(ProbeRunner::class, 'arty.probe.probe_runner');
 
     $services->set('arty.probe.run_probes_command', RunProbesCommand::class)
         ->args([
