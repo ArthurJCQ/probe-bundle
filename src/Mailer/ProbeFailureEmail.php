@@ -23,13 +23,7 @@ readonly class ProbeFailureEmail implements ProbeFailureEmailInterface
     public function createProbeFailureEmail(ProbeStatusHistory $probeStatusHistory): TemplatedEmail
     {
         if (!$this->fromAddress || !$this->to || !$this->subject || !$this->template) {
-            $missing = [];
-            if (!$this->fromAddress) $missing[] = 'from_address';
-            if (!$this->to) $missing[] = 'to';
-            if (!$this->subject) $missing[] = 'subject';
-            if (!$this->template) $missing[] = 'template';
-
-            throw new \RuntimeException(sprintf('Required parameters are missing in ArtyProbeBundle alerting configuration: %s', implode(', ', $missing)));
+            throw new \RuntimeException('Required parameters are missing in ArtyProbeBundle alerting configuration.');
         }
 
         return (new TemplatedEmail())

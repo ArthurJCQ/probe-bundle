@@ -34,13 +34,20 @@ class RunProbesCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $probeName = $input->getArgument('name');
+        $results = [];
 
-        if (null !== $probeName) {
-            $results = [$this->runner->run($probeName)];
-            $io->title(sprintf('Running probe: %s', $probeName));
-        } else {
+        if (null === $probeName) {
             $results = $this->runner->runAll();
             $io->title('Running all probes');
+        }
+
+        if (is_string($probeName)) {
+            $results = [$this->runner->run($probeName)];
+            $io->title(sprintf('Running probe: %s', $probeName));
+        }
+
+        if (\count($results) === 0) {
+            $io->error('No probes found.');
         }
 
         $table = new Table($output);

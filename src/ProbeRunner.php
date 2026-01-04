@@ -34,7 +34,7 @@ readonly final class ProbeRunner
     {
         $results = [];
 
-        foreach ($this->probesByName as $name => $probe) {
+        foreach (array_keys($this->probesByName) as $name) {
             $results[] = $this->run($name);
         }
 
@@ -56,12 +56,13 @@ readonly final class ProbeRunner
 
         $probeStatusHistory = $this->probeManager->create(
             $name,
-            $probeMetadata['description'] ?? '',
+            $probeMetadata['description'],
             $status,
             new \DateTimeImmutable(),
         );
 
-        if ($this->alertManager instanceof AlertManagerInterface
+        if (
+            $this->alertManager instanceof AlertManagerInterface
             && $status === ProbeStatus::FAILED
             && $this->probeManager->findLastByProbeName($name)?->status !== ProbeStatus::FAILED
         ) {
