@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Arty\ProbeBundle\DependencyInjection;
 
-
 use Arty\ProbeBundle\Attribute\Probe as ProbeAttribute;
 use Arty\ProbeBundle\Model\ProbeInterface;
 use Arty\ProbeBundle\ProbeRunner;
@@ -21,7 +20,7 @@ class ProbeCompilerPass implements CompilerPassInterface
 
         $taggedServices = $container->findTaggedServiceIds('app.probe');
 
-        foreach ($taggedServices as $id => $tags) {
+        foreach (array_keys($taggedServices) as $id) {
             $definition = $container->getDefinition($id);
 
             /** @var class-string<ProbeInterface> $class */

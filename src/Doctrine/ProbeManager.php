@@ -23,7 +23,7 @@ class ProbeManager implements ProbeManagerInterface
     /**
      * @param class-string<ProbeStatusHistory> $class
      *
-     * @throws \LogicException if the object repository does not implement `Arty\Probe\Doctrine\Repository\ProbeStatusHistoryRepositoryInterface`
+     * @throws \LogicException If the object repository does not implement `ProbeStatusHistoryRepositoryInterface`.
      */
     public function __construct(ObjectManager $om, string $class)
     {
@@ -32,7 +32,11 @@ class ProbeManager implements ProbeManagerInterface
         $repository = $om->getRepository($class);
 
         if (!$repository instanceof ProbeStatusHistoryRepositoryInterface) {
-            throw new \LogicException(sprintf('Repository mapped for "%s" should implement %s.', $class, ProbeStatusHistoryRepositoryInterface::class));
+            throw new \LogicException(sprintf(
+                'Repository mapped for "%s" should implement %s.',
+                $class,
+                ProbeStatusHistoryRepositoryInterface::class,
+            ));
         }
 
         $this->repository = $repository;
@@ -46,8 +50,7 @@ class ProbeManager implements ProbeManagerInterface
         string $probeDescription,
         ProbeStatus $status,
         \DateTimeImmutable $checkedAt,
-    ): ProbeStatusHistory
-    {
+    ): ProbeStatusHistory {
         return new $this->class(
             $probeName,
             $probeDescription,
