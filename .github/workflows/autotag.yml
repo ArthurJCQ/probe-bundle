@@ -8,7 +8,9 @@ on:
 
 jobs:
   build:
-    if: github.event.pull_request.merged == true
+    if: |
+      github.event.pull_request.merged == true &&
+      !contains(github.event.pull_request.labels.*.name, 'github_actions')
     runs-on: ubuntu-22.04
     permissions:
       contents: write
@@ -23,3 +25,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_PREFIX: v
+          DEFAULT_BUMP: patch
