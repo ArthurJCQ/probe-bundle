@@ -21,15 +21,6 @@ use Symfony\Component\DependencyInjection\Parameter;
 use Symfony\Component\DependencyInjection\Reference;
 
 return static function (ContainerConfigurator $container, ContainerBuilder $builder) {
-    $container->parameters()
-        ->set('arty.probe.probe_status_history.class', ProbeStatusHistory::class)
-        ->set('arty.probe.alerting.enabled', $config['alerting']['enabled'] ?? false)
-        ->set('arty.probe.alert.from_address', $config['alerting']['from_address'] ?? null)
-        ->set('arty.probe.alert.from_name', $config['alerting']['from_name'] ?? null)
-        ->set('arty.probe.alert.to', $config['alerting']['to'] ?? null)
-        ->set('arty.probe.alert.subject', $config['alerting']['subject'] ?? null)
-        ->set('arty.probe.alert.template', $config['alerting']['template'] ?? null);
-
     $services = $container->services();
 
     $services->set('arty.probe.probe_manager', ProbeManager::class)
@@ -42,11 +33,11 @@ return static function (ContainerConfigurator $container, ContainerBuilder $buil
     if ($builder->getParameter('arty.probe.alerting.enabled')) {
         $services->set('arty.probe.probe_failure_email', ProbeFailureEmail::class)
             ->args([
-                new Parameter('arty.probe.alert.from_address'),
-                new Parameter('arty.probe.alert.from_name'),
-                new Parameter('arty.probe.alert.to'),
-                new Parameter('arty.probe.alert.subject'),
-                new Parameter('arty.probe.alert.template'),
+                new Parameter('arty.probe.alerting.from_address'),
+                new Parameter('arty.probe.alerting.from_name'),
+                new Parameter('arty.probe.alerting.to'),
+                new Parameter('arty.probe.alerting.subject'),
+                new Parameter('arty.probe.alerting.template'),
             ]);
         $services->alias(ProbeFailureEmailInterface::class, 'arty.probe.probe_failure_email');
 
@@ -67,7 +58,7 @@ return static function (ContainerConfigurator $container, ContainerBuilder $buil
 
     $services->set('arty.probe.run_probes_command', RunProbesCommand::class)
         ->args([
-            new Reference(ProbeRunner::class),
+            new Reference('arty.probe.probe_runner'),
         ])
         ->tag('console.command');
 };
