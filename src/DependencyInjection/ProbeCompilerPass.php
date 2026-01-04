@@ -6,7 +6,6 @@ namespace Arty\ProbeBundle\DependencyInjection;
 
 use Arty\ProbeBundle\Attribute\Probe as ProbeAttribute;
 use Arty\ProbeBundle\Model\ProbeInterface;
-use Arty\ProbeBundle\ProbeRunner;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -15,7 +14,7 @@ class ProbeCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        $probeRunnerDef = $container->getDefinition(ProbeRunner::class);
+        $probeRunnerDef = $container->getDefinition('arty.probe.probe_runner');
         $probeRefs = [];
 
         $taggedServices = $container->findTaggedServiceIds('app.probe');
