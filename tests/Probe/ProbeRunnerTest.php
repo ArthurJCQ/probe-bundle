@@ -49,6 +49,7 @@ class ProbeRunnerTest extends TestCase
                 'warningThreshold' => 1,
                 'failureThreshold' => 2,
                 'description' => 'Success description',
+                'notify' => true,
             ],
             'failure_probe' => [
                 'probeInstance' => $failureProbe,
@@ -57,6 +58,7 @@ class ProbeRunnerTest extends TestCase
                 'warningThreshold' => 1,
                 'failureThreshold' => 2,
                 'description' => 'Failure description',
+                'notify' => true,
             ],
         ];
 
@@ -105,6 +107,7 @@ class ProbeRunnerTest extends TestCase
                 'warningThreshold' => 1,
                 'failureThreshold' => 2,
                 'description' => 'Failure description',
+                'notify' => true,
             ],
         ];
 
@@ -139,6 +142,7 @@ class ProbeRunnerTest extends TestCase
                 'warningThreshold' => 1,
                 'failureThreshold' => 2,
                 'description' => 'Failure description',
+                'notify' => true,
             ],
         ];
 
@@ -174,6 +178,7 @@ class ProbeRunnerTest extends TestCase
                 'warningThreshold' => 1,
                 'failureThreshold' => 2,
                 'description' => 'Failure description',
+                'notify' => true,
             ],
         ];
 
@@ -190,7 +195,41 @@ class ProbeRunnerTest extends TestCase
         ->shouldBeCalled();
 
         $this->probeManager->save($probeStatusHistory)->shouldBeCalled();
-        $this->probeManager->findLastByProbeName(Argument::any())->shouldNotBeCalled();
+
+        $runner->run('failure_probe');
+    }
+
+    public function testRunDoesNotSendAlertWhenNotifyIsFalse(): void
+    {
+        $failureProbe = new FailureProbe();
+        $probesByName = [
+            'failure_probe' => [
+                'probeInstance' => $failureProbe,
+                'name' => 'failure_probe',
+                'successThreshold' => 0,
+                'warningThreshold' => 1,
+                'failureThreshold' => 2,
+                'description' => 'Failure description',
+                'notify' => false,
+            ],
+        ];
+
+        $runner = new ProbeRunner($probesByName, $this->probeManager->reveal(), $this->alertManager->reveal());
+
+        $probeStatusHistory = new TestProbeStatusHistory('failure_probe', 'Failure description', ProbeStatus::FAILED, new \DateTimeImmutable());
+
+        $this->probeManager->create(
+            'failure_probe',
+            'Failure description',
+            ProbeStatus::FAILED,
+            Argument::type(\DateTimeImmutable::class)
+        )->willReturn($probeStatusHistory)
+        ->shouldBeCalled();
+
+        $this->probeManager->findLastByProbeName('failure_probe')->willReturn(null)->shouldBeCalled();
+        $this->probeManager->save($probeStatusHistory)->shouldBeCalled();
+
+        $this->alertManager->sendAlert(Argument::any())->shouldNotBeCalled();
 
         $runner->run('failure_probe');
     }

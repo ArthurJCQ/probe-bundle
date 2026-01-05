@@ -46,6 +46,14 @@ A probe must implement `Arty\ProbeBundle\Model\ProbeInterface`, which requires a
 
 The `#[Probe]` attribute registers your service as a probe and allows you to configure its behavior.
 
+The attribute accepts the following parameters:
+- `name` (required): A unique identifier for the probe
+- `description` (optional): A human-readable description of what the probe checks
+- `successThreshold` (optional, default: 0): The threshold for success status
+- `warningThreshold` (optional, default: 1): The threshold for warning status
+- `failureThreshold` (optional, default: 2): The threshold for failure status
+- `notify` (optional, default: true): Whether to send alerts when the probe fails
+
 ```php
 namespace App\Probe;
 
@@ -84,7 +92,7 @@ public function check(): int
     if ($this->isHealthy()) {
         return Probe::SUCCESS; // 0
     }
-    
+
     if ($this->hasMinorIssues()) {
         return Probe::WARNING; // 1
     }
@@ -103,7 +111,8 @@ You can customize the thresholds in the `#[Probe]` attribute. This is particular
     successThreshold: 0,
     warningThreshold: 10,
     failureThreshold: 50,
-    description: 'Monitors the number of corrupted records'
+    description: 'Monitors the number of corrupted records',
+    notify: true,
 )]
 class DataIntegrityProbe implements ProbeInterface
 {
