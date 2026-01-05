@@ -20,7 +20,8 @@ readonly final class ProbeRunner
          *     successThreshold: int,
          *     warningThreshold: int,
          *     failureThreshold: int,
-         *     description: string
+         *     description: string,
+         *     notify: bool
          * }>
          */
         private array $probesByName,
@@ -65,6 +66,7 @@ readonly final class ProbeRunner
             $this->alertManager instanceof AlertManagerInterface
             && $status === ProbeStatus::FAILED
             && $this->probeManager->findLastByProbeName($name)?->status !== ProbeStatus::FAILED
+            && $probeMetadata['notify']
         ) {
             $this->alertManager->sendAlert($probeStatusHistory);
         }

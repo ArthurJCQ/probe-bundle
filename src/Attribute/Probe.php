@@ -16,6 +16,7 @@ class Probe
         public int $successThreshold = self::SUCCESS,
         public int $warningThreshold = self::WARNING,
         public int $failureThreshold = self::FAILURE,
+        public bool $notify = true,
         public ?string $description = null,
     ) {
     }

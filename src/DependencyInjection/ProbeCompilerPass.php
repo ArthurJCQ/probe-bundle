@@ -46,6 +46,7 @@ class ProbeCompilerPass implements CompilerPassInterface
                 'successThreshold' => $probeAttr->successThreshold,
                 'warningThreshold' => $probeAttr->warningThreshold,
                 'failureThreshold' => $probeAttr->failureThreshold,
+                'notify' => $probeAttr->notify,
                 'description' => $probeAttr->description ?? null,
             ];
         }
