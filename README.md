@@ -21,10 +21,14 @@ return [
 
 ## Configuration
 
+
+### YAML Configuration
+
 You can configure the alerting system to be notified when a probe fails. Create a configuration file at `config/packages/arty_probe.yaml`:
 
 ```yaml
 arty_probe:
+    probe_status_history_class: App\Entity\ProbeStatusHistory # Adjust this to match the class your application will use
     alerting:
         enabled: true
         to: "admin@example.com"
@@ -33,6 +37,29 @@ arty_probe:
         subject: "Probe Failure Alert"
         # template: "@ArtyProbe/alerting/failure.html.twig" # Optional: customize the email template
 ```
+
+### Create the Entity
+
+Make it extend the base `Arty\ProbeBundle\Entity\ProbeStatusHistory` :
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Entity;
+
+use Arty\ProbeBundle\Doctrine\Repository\ProbeStatusHistoryRepository;
+use Arty\ProbeBundle\Entity\ProbeStatusHistory as BaseProbeStatusHistory;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Table('probe_status_history')]
+class ProbeStatusHistory extends BaseProbeStatusHistory
+{
+}
+```
+
+Run migrations to create the table, and you are good to go !
 
 ## Creating a Probe
 
