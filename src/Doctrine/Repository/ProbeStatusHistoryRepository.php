@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Arty\ProbeBundle\Doctrine\Repository;
 
 use Arty\ProbeBundle\Entity\ProbeStatusHistory;
-use Arty\ProbeBundle\Model\ProbeStatusHistoryInterface;
+use Arty\ProbeBundle\Model\AbstractProbeStatusHistory;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -15,13 +15,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProbeStatusHistoryRepository extends EntityRepository implements ProbeStatusHistoryRepositoryInterface
 {
-    public function save(ProbeStatusHistoryInterface $probeStatusHistory): void
+    public function save(AbstractProbeStatusHistory $probeStatusHistory): void
     {
         $this->getEntityManager()->persist($probeStatusHistory);
         $this->getEntityManager()->flush();
     }
 
-    public function findLastByProbeName(string $probeName): ?ProbeStatusHistoryInterface
+    public function findLastByProbeName(string $probeName): ?AbstractProbeStatusHistory
     {
         return $this->createQueryBuilder('psh')
             ->where('psh.probeName = :probeName')
@@ -32,7 +32,7 @@ class ProbeStatusHistoryRepository extends EntityRepository implements ProbeStat
             ->getOneOrNullResult();
     }
 
-    /** @return ProbeStatusHistoryInterface[] */
+    /** @return AbstractProbeStatusHistory[] */
     public function findAllLastStatuses(): array
     {
         $qb = $this->createQueryBuilder('psh');
@@ -40,7 +40,7 @@ class ProbeStatusHistoryRepository extends EntityRepository implements ProbeStat
         $qb->where(
             'psh.checkedAt = (
             SELECT MAX(psh2.checkedAt)
-            FROM ' . ProbeStatusHistory::class . ' psh2
+            FROM ' . $this->getEntityName() . ' psh2
             WHERE psh2.probeName = psh.probeName
             )',
         )
@@ -49,7 +49,7 @@ class ProbeStatusHistoryRepository extends EntityRepository implements ProbeStat
         return $qb->getQuery()->getResult();
     }
 
-    /** @return ProbeStatusHistoryInterface[] */
+    /** @return AbstractProbeStatusHistory[] */
     public function findLast5ByProbeName(string $probeName): array
     {
         return $this->createQueryBuilder('psh')

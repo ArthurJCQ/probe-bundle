@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Arty\ProbeBundle\Model\ProbeStatusHistoryInterface;
+use Arty\ProbeBundle\Model\AbstractProbeStatusHistory;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 
 return static function (DefinitionConfigurator $definition): void {
@@ -13,8 +13,8 @@ return static function (DefinitionConfigurator $definition): void {
                 ->cannotBeEmpty()
                 ->info('Set the probe status history class to use')
                 ->validate()
-                    ->ifTrue(static fn ($v): bool => null === $v || !\in_array(ProbeStatusHistoryInterface::class, class_implements($v), true))
-                    ->thenInvalid(sprintf('The "probe_status_history_class" class must implement "%s".', ProbeStatusHistoryInterface::class))
+                    ->ifTrue(static fn ($v): bool => null === $v || !\in_array(AbstractProbeStatusHistory::class, class_parents($v), true))
+                    ->thenInvalid(sprintf('The "probe_status_history_class" class must extends "%s".', AbstractProbeStatusHistory::class))
                 ->end()
             ->end()
             ->arrayNode('alerting')

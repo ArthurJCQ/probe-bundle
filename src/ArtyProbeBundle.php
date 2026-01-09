@@ -28,7 +28,10 @@ class ArtyProbeBundle extends AbstractBundle
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
         $container->parameters()
-            ->set('arty.probe.probe_status_history_class', $this->getProbeStatusHistoryClass($config) ?? ProbeStatusHistory::class)
+            ->set(
+                'arty.probe.probe_status_history_class',
+                $this->getProbeStatusHistoryClass($config) ?? ProbeStatusHistory::class,
+            )
             ->set('arty.probe.alerting.enabled', $config['alerting']['enabled'] ?? false)
             ->set('arty.probe.alerting.from_address', $config['alerting']['from_address'] ?? null)
             ->set('arty.probe.alerting.from_name', $config['alerting']['from_name'] ?? null)

@@ -6,5 +6,5 @@ namespace Arty\ProbeBundle\Model;
 
 interface AlertManagerInterface
 {
-    public function sendAlert(ProbeStatusHistoryInterface $probeStatusHistory): void;
+    public function sendAlert(AbstractProbeStatusHistory $probeStatusHistory): void;
 }

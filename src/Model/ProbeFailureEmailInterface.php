@@ -8,5 +8,5 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 interface ProbeFailureEmailInterface
 {
-    public function createProbeFailureEmail(ProbeStatusHistoryInterface $probeStatusHistory): TemplatedEmail;
+    public function createProbeFailureEmail(AbstractProbeStatusHistory $probeStatusHistory): TemplatedEmail;
 }

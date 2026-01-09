@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Arty\ProbeBundle\Model;
 
-abstract class AbstractProbeStatusHistory implements ProbeStatusHistoryInterface
+abstract class AbstractProbeStatusHistory
 {
     public ?int $id = null;
 

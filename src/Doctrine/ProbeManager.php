@@ -5,23 +5,23 @@ declare(strict_types=1);
 namespace Arty\ProbeBundle\Doctrine;
 
 use Arty\ProbeBundle\Doctrine\Repository\ProbeStatusHistoryRepositoryInterface;
+use Arty\ProbeBundle\Model\AbstractProbeStatusHistory;
 use Arty\ProbeBundle\Model\ProbeManagerInterface;
 use Arty\ProbeBundle\Model\ProbeStatus;
-use Arty\ProbeBundle\Model\ProbeStatusHistoryInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class ProbeManager implements ProbeManagerInterface
 {
     protected ObjectManager $objectManager;
 
-    /** @var class-string<ProbeStatusHistoryInterface> */
+    /** @var class-string<AbstractProbeStatusHistory> */
     protected string $class;
 
-    /** @var ProbeStatusHistoryRepositoryInterface<ProbeStatusHistoryInterface> */
+    /** @var ProbeStatusHistoryRepositoryInterface<AbstractProbeStatusHistory> */
     protected ProbeStatusHistoryRepositoryInterface $repository;
 
     /**
-     * @param class-string<ProbeStatusHistoryInterface> $class
+     * @param class-string<AbstractProbeStatusHistory> $class
      *
      * @throws \LogicException If the object repository does not implement `ProbeStatusHistoryRepositoryInterface`.
      */
@@ -50,7 +50,7 @@ class ProbeManager implements ProbeManagerInterface
         string $probeDescription,
         ProbeStatus $status,
         \DateTimeImmutable $checkedAt,
-    ): ProbeStatusHistoryInterface {
+    ): AbstractProbeStatusHistory {
         return new $this->class(
             $probeName,
             $probeDescription,
@@ -59,30 +59,30 @@ class ProbeManager implements ProbeManagerInterface
         );
     }
 
-    public function save(ProbeStatusHistoryInterface $probeStatusHistory): void
+    public function save(AbstractProbeStatusHistory $probeStatusHistory): void
     {
         $this->objectManager->persist($probeStatusHistory);
         $this->objectManager->flush();
     }
 
-    public function delete(ProbeStatusHistoryInterface $probeStatusHistory): void
+    public function delete(AbstractProbeStatusHistory $probeStatusHistory): void
     {
         $this->objectManager->remove($probeStatusHistory);
         $this->objectManager->flush();
     }
 
-    public function findLastByProbeName(string $probeName): ?ProbeStatusHistoryInterface
+    public function findLastByProbeName(string $probeName): ?AbstractProbeStatusHistory
     {
         return $this->repository->findLastByProbeName($probeName);
     }
 
-    /** @return ProbeStatusHistoryInterface[] */
+    /** @return AbstractProbeStatusHistory[] */
     public function findAllLastStatuses(): array
     {
         return $this->repository->findAllLastStatuses();
     }
 
-    /** @return ProbeStatusHistoryInterface[] */
+    /** @return AbstractProbeStatusHistory[] */
     public function findLast5ByProbeName(string $probeName): array
     {
         return $this->repository->findLast5ByProbeName($probeName);
