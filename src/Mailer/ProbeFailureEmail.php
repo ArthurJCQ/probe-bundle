@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Arty\ProbeBundle\Mailer;
 
-use Arty\ProbeBundle\Entity\ProbeStatusHistory;
 use Arty\ProbeBundle\Model\ProbeFailureEmailInterface;
+use Arty\ProbeBundle\Model\ProbeStatusHistoryInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Address;
 
@@ -20,7 +20,7 @@ readonly class ProbeFailureEmail implements ProbeFailureEmailInterface
     ) {
     }
 
-    public function createProbeFailureEmail(ProbeStatusHistory $probeStatusHistory): TemplatedEmail
+    public function createProbeFailureEmail(ProbeStatusHistoryInterface $probeStatusHistory): TemplatedEmail
     {
         if (!$this->fromAddress || !$this->to || !$this->subject || !$this->template) {
             throw new \RuntimeException('Required parameters are missing in ArtyProbeBundle alerting configuration.');

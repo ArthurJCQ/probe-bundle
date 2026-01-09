@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace Arty\ProbeBundle\Doctrine\Repository;
 
-use Arty\ProbeBundle\Entity\ProbeStatusHistory;
+use Arty\ProbeBundle\Model\ProbeStatusHistoryInterface;
 use Doctrine\Persistence\ObjectRepository;
 
 /**
- * @template T of ProbeStatusHistory
+ * @template T of ProbeStatusHistoryInterface
  *
  * @extends ObjectRepository<T>
  */
 interface ProbeStatusHistoryRepositoryInterface extends ObjectRepository
 {
-    public function save(ProbeStatusHistory $probeStatusHistory): void;
+    public function save(ProbeStatusHistoryInterface $probeStatusHistory): void;
 
-    public function findLastByProbeName(string $probeName): ?ProbeStatusHistory;
+    public function findLastByProbeName(string $probeName): ?ProbeStatusHistoryInterface;
 
-    /** @return ProbeStatusHistory[] */
+    /** @return ProbeStatusHistoryInterface[] */
     public function findAllLastStatuses(): array;
 
-    /** @return ProbeStatusHistory[] */
+    /** @return ProbeStatusHistoryInterface[] */
     public function findLast5ByProbeName(string $probeName): array;
 }
