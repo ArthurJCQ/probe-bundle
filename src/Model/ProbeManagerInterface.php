@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Arty\ProbeBundle\Model;
 
-use Arty\ProbeBundle\Entity\ProbeStatusHistory;
-
 interface ProbeManagerInterface
 {
     public function create(
@@ -13,17 +11,17 @@ interface ProbeManagerInterface
         string $probeDescription,
         ProbeStatus $status,
         \DateTimeImmutable $checkedAt,
-    ): ProbeStatusHistory;
+    ): AbstractProbeStatusHistory;
 
-    public function save(ProbeStatusHistory $probeStatusHistory): void;
+    public function save(AbstractProbeStatusHistory $probeStatusHistory): void;
 
-    public function delete(ProbeStatusHistory $probeStatusHistory): void;
+    public function delete(AbstractProbeStatusHistory $probeStatusHistory): void;
 
-    public function findLastByProbeName(string $probeName): ?ProbeStatusHistory;
+    public function findLastByProbeName(string $probeName): ?AbstractProbeStatusHistory;
 
-    /** @return ProbeStatusHistory[] */
+    /** @return AbstractProbeStatusHistory[] */
     public function findAllLastStatuses(): array;
 
-    /** @return ProbeStatusHistory[] */
+    /** @return AbstractProbeStatusHistory[] */
     public function findLast5ByProbeName(string $probeName): array;
 }

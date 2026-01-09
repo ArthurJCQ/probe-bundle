@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Arty\ProbeBundle\Tests\Probe;
 
-use Arty\ProbeBundle\Entity\ProbeStatusHistory;
+use Arty\ProbeBundle\Model\AbstractProbeStatusHistory;
 use Arty\ProbeBundle\Model\AlertManagerInterface;
 use Arty\ProbeBundle\Model\ProbeManagerInterface;
 use Arty\ProbeBundle\Model\ProbeStatus;
@@ -16,7 +16,7 @@ use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
-class TestProbeStatusHistory extends ProbeStatusHistory
+class TestProbeStatusHistory extends AbstractProbeStatusHistory
 {
 }
 
@@ -80,12 +80,12 @@ class ProbeRunnerTest extends TestCase
         )->willReturn(new TestProbeStatusHistory('failure_probe', 'Failure description', ProbeStatus::FAILED, new \DateTimeImmutable()))
         ->shouldBeCalled();
 
-        $this->probeManager->save(Argument::type(ProbeStatusHistory::class))
+        $this->probeManager->save(Argument::type(AbstractProbeStatusHistory::class))
             ->shouldBeCalledTimes(2);
 
         $this->probeManager->findLastByProbeName('failure_probe')->willReturn(null)->shouldBeCalled();
 
-        $this->alertManager->sendAlert(Argument::type(ProbeStatusHistory::class))->shouldBeCalledOnce();
+        $this->alertManager->sendAlert(Argument::type(AbstractProbeStatusHistory::class))->shouldBeCalledOnce();
 
         $results = $runner->runAll();
 

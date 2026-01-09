@@ -6,7 +6,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Arty\ProbeBundle\Command\RunProbesCommand;
 use Arty\ProbeBundle\Doctrine\ProbeManager;
-use Arty\ProbeBundle\Entity\ProbeStatusHistory;
 use Arty\ProbeBundle\Mailer\AlertManager;
 use Arty\ProbeBundle\Mailer\ProbeFailureEmail;
 use Arty\ProbeBundle\Model\AlertManagerInterface;
@@ -26,7 +25,7 @@ return static function (ContainerConfigurator $container, ContainerBuilder $buil
     $services->set('arty.probe.probe_manager', ProbeManager::class)
         ->args([
             new Reference(EntityManagerInterface::class),
-            new Parameter('arty.probe.probe_status_history.class'),
+            new Parameter('arty.probe.probe_status_history_class'),
         ]);
     $services->alias(ProbeManagerInterface::class, 'arty.probe.probe_manager');
 

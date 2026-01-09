@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Arty\ProbeBundle;
 
-use Arty\ProbeBundle\Entity\ProbeStatusHistory;
+use Arty\ProbeBundle\Model\AbstractProbeStatusHistory;
 use Arty\ProbeBundle\Model\AlertManagerInterface;
 use Arty\ProbeBundle\Model\ProbeInterface;
 use Arty\ProbeBundle\Model\ProbeManagerInterface;
@@ -30,7 +30,7 @@ readonly final class ProbeRunner
     ) {
     }
 
-    /** @return ProbeStatusHistory[] */
+    /** @return AbstractProbeStatusHistory[] */
     public function runAll(): array
     {
         $results = [];
@@ -42,7 +42,7 @@ readonly final class ProbeRunner
         return $results;
     }
 
-    public function run(string $name): ProbeStatusHistory
+    public function run(string $name): AbstractProbeStatusHistory
     {
         $probeMetadata = $this->probesByName[$name];
         $probe = $probeMetadata['probeInstance'];
