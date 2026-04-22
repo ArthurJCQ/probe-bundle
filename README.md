@@ -21,22 +21,86 @@ return [
 
 ## Configuration
 
-
 ### YAML Configuration
 
-You can configure the alerting system to be notified when a probe fails. Create a configuration file at `config/packages/arty_probe.yaml`:
+Create a configuration file at `config/packages/arty_probe.yaml`:
 
 ```yaml
 arty_probe:
-    probe_status_history_class: App\Entity\ProbeStatusHistory # Adjust this to match the class your application will use
+    probe_status_history_class: App\Entity\ProbeStatusHistory
     alerting:
         enabled: true
-        to: "admin@example.com"
-        from_address: "no-reply@example.com"
-        from_name: "Probe System"
-        subject: "Probe Failure Alert"
-        # template: "@ArtyProbe/alerting/failure.html.twig" # Optional: customize the email template
+        channel: email # or chat
+        to: "admin@example.com" # required for email channel
 ```
+
+### Alerting Channels
+
+The bundle uses [Symfony Notifier](https://symfony.com/doc/current/notifier.html) to send alerts when a probe fails for the first time. Two channels are available: `email` and `chat`.
+
+#### Email Channel
+
+Install and configure [Symfony Mailer](https://symfony.com/doc/current/mailer.html):
+
+```bash
+composer require symfony/mailer
+```
+
+```yaml
+# config/packages/arty_probe.yaml
+arty_probe:
+    alerting:
+        enabled: true
+        channel: email
+        to: "admin@example.com"
+```
+
+Make sure your mailer is configured (e.g. `MAILER_DSN` in `.env`). The sender address is configured in your mailer config:
+
+```yaml
+# config/packages/mailer.yaml
+framework:
+    mailer:
+        dsn: '%env(MAILER_DSN)%'
+        envelope:
+            sender: 'no-reply@example.com'
+```
+
+#### Chat Channel (Slack, Microsoft Teams, ...)
+
+Install the transport for your chat service:
+
+```bash
+# Pick one:
+composer require symfony/slack-notifier
+composer require symfony/microsoft-teams-notifier
+```
+
+Configure the transport DSN and the bundle:
+
+```yaml
+# config/packages/notifier.yaml
+framework:
+    notifier:
+        chatter_transports:
+            slack: '%env(SLACK_DSN)%'
+
+# config/packages/arty_probe.yaml
+arty_probe:
+    alerting:
+        enabled: true
+        channel: chat
+```
+
+Set the DSN in your `.env`:
+
+```env
+SLACK_DSN=slack://TOKEN@default?channel=CHANNEL
+```
+
+> By default, if Symfony Messenger is installed, notifications are sent asynchronously.
+> To send them synchronously, add `message_bus: false` to your `framework.notifier` config.
+> See [Symfony Notifier docs](https://symfony.com/doc/current/notifier.html) for details.
 
 ### Create the Entity
 

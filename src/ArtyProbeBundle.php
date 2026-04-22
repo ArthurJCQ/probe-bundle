@@ -33,11 +33,8 @@ class ArtyProbeBundle extends AbstractBundle
                 $this->getProbeStatusHistoryClass($config) ?? ProbeStatusHistory::class,
             )
             ->set('arty.probe.alerting.enabled', $config['alerting']['enabled'] ?? false)
-            ->set('arty.probe.alerting.from_address', $config['alerting']['from_address'] ?? null)
-            ->set('arty.probe.alerting.from_name', $config['alerting']['from_name'] ?? null)
-            ->set('arty.probe.alerting.to', $config['alerting']['to'] ?? null)
-            ->set('arty.probe.alerting.subject', $config['alerting']['subject'] ?? null)
-            ->set('arty.probe.alerting.template', $config['alerting']['template'] ?? null);
+            ->set('arty.probe.alerting.channel', $config['alerting']['channel'] ?? 'email')
+            ->set('arty.probe.alerting.to', $config['alerting']['to'] ?? null);
 
         $container->import(__DIR__ . '/../config/services.php');
     }
