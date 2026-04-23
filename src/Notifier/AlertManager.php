@@ -7,6 +7,7 @@ namespace Arty\ProbeBundle\Notifier;
 use Arty\ProbeBundle\Model\AbstractProbeStatusHistory;
 use Arty\ProbeBundle\Model\AlertManagerInterface;
 use Symfony\Component\Notifier\NotifierInterface;
+use Symfony\Component\Notifier\Recipient\NoRecipient;
 use Symfony\Component\Notifier\Recipient\Recipient;
 
 final class AlertManager implements AlertManagerInterface
@@ -24,7 +25,7 @@ final class AlertManager implements AlertManagerInterface
 
         $recipient = 'email' === $this->channel
             ? new Recipient($this->to ?? '')
-            : new Recipient('');
+            : new NoRecipient();
 
         $this->notifier->send($notification, $recipient);
     }
