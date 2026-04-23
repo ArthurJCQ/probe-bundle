@@ -6,11 +6,9 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Arty\ProbeBundle\Command\RunProbesCommand;
 use Arty\ProbeBundle\Doctrine\ProbeManager;
-use Arty\ProbeBundle\Mailer\AlertManager;
-use Arty\ProbeBundle\Mailer\ProbeFailureEmail;
 use Arty\ProbeBundle\Model\AlertManagerInterface;
-use Arty\ProbeBundle\Model\ProbeFailureEmailInterface;
 use Arty\ProbeBundle\Model\ProbeManagerInterface;
+use Arty\ProbeBundle\Notifier\AlertManager;
 use Arty\ProbeBundle\ProbeRunner;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\Argument\AbstractArgument;
@@ -30,20 +28,11 @@ return static function (ContainerConfigurator $container, ContainerBuilder $buil
     $services->alias(ProbeManagerInterface::class, 'arty.probe.probe_manager');
 
     if ($builder->getParameter('arty.probe.alerting.enabled')) {
-        $services->set('arty.probe.probe_failure_email', ProbeFailureEmail::class)
-            ->args([
-                new Parameter('arty.probe.alerting.from_address'),
-                new Parameter('arty.probe.alerting.from_name'),
-                new Parameter('arty.probe.alerting.to'),
-                new Parameter('arty.probe.alerting.subject'),
-                new Parameter('arty.probe.alerting.template'),
-            ]);
-        $services->alias(ProbeFailureEmailInterface::class, 'arty.probe.probe_failure_email');
-
         $services->set('arty.probe.alert_manager', AlertManager::class)
             ->args([
-                new Reference('mailer'),
-                new Reference(ProbeFailureEmailInterface::class),
+                new Reference('notifier'),
+                new Parameter('arty.probe.alerting.channel'),
+                new Parameter('arty.probe.alerting.to'),
             ]);
         $services->alias(AlertManagerInterface::class, 'arty.probe.alert_manager');
     }
